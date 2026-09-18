@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>동아MX - 청암대학교 서바이버즈</title>
+<title>동아MX 서바이버즈 · FINAL</title>
 <style>
   :root{
     --bg:#0b0d14;
@@ -154,17 +154,65 @@
   #ultimateOverlay.blast #ultimateWave{animation:waveBlast .72s ease-out both}
   @keyframes sunaEnter{to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
   @keyframes sunaBlast{0%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.12)}}
-  @keyframes ultimateBlast{0%{opacity:0}12%{opacity:.95}100%{opacity:0}}
+  @keyframes ultimateBlast{0%{opacity:0}12%{opacity:.24}100%{opacity:0}}
   @keyframes waveBlast{0%{opacity:1;transform:translate(-50%,-50%) scale(.2)}100%{opacity:0;transform:translate(-50%,-50%) scale(55)}}
   @keyframes ultimateFadeIn{from{opacity:0}to{opacity:1}}
   #hint{bottom:96px}
   @media(max-width:700px){#hint{display:none}.upgradeCard{width:150px;padding:14px 10px}#bossAlert{top:105px;font-size:13px}#ultimateBtn{right:12px;bottom:18px;min-width:125px;padding:11px 13px;font-size:14px}#jjamppongBtn{right:12px;bottom:92px;min-width:125px;padding:11px 13px;font-size:14px}#sunaCutin{gap:12px;padding:18px 16px}#sunaAvatar{flex-basis:84px;width:84px;height:84px;font-size:43px}}
+
+  /* Final edition: accessible menus and compact screens */
+  #startScreen,#gameOverScreen,#levelUpScreen,#pauseScreen{overflow-y:auto;touch-action:pan-y;}
+  #startScreen{gap:12px;background:radial-gradient(ellipse at 20% 0%,rgba(69,41,125,.55),transparent 60%),rgba(6,7,12,.92)}
+  #startScreen>*{flex-shrink:0}
+  .edition{font-size:11px;letter-spacing:4px;color:#b8a7ff;font-weight:800}
+  .featureChips{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;max-width:680px}
+  .featureChips span{padding:6px 10px;border:1px solid #ffffff20;border-radius:20px;font-size:11px;color:#d9d5e9;background:#ffffff08}
+  .nameField{display:flex;gap:10px;align-items:center;color:#c6c4d5;font-size:13px}
+  #playerName,#cheatCode{width:170px;background:#171c2b;border:1px solid #787087;border-radius:9px;padding:10px;color:white;font:inherit;touch-action:manipulation}
+  .storageNote{font-size:11px;color:#9692aa;margin:0;max-width:640px;line-height:1.5}
+  #pauseBtn{position:absolute;top:112px;left:12px;z-index:14;background:#141e28dc;color:white;border:1px solid #ffffff40;border-radius:20px;padding:8px 12px;cursor:pointer}
+  #pauseScreen{position:absolute;inset:0;z-index:45;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;background:#080b16db;backdrop-filter:blur(8px);padding:24px;text-align:center}
+  .secondary{border:1px solid #ffffff40;background:#ffffff0b;color:#e3e0f3;padding:12px 24px;border-radius:12px;font:inherit;cursor:pointer}
+  button:focus-visible,input:focus-visible{outline:3px solid #5ce1ff;outline-offset:4px}
+  #hud{background:linear-gradient(#080b16df,#080b1680,transparent);padding-bottom:16px}
+  @media(max-height:760px){#startScreen,#gameOverScreen,#levelUpScreen{justify-content:flex-start;padding-top:20px}#rankingList{max-height:145px}h1{font-size:clamp(23px,4vw,34px)}}
+  @media(max-width:520px){#upgradeOptions{flex-direction:column;width:100%}.upgradeCard{width:100%;min-height:100px}.upgradeCard .icon{float:left;margin:4px 16px 4px 4px}.rankingHead{flex-wrap:wrap}#startScreen .sub{font-size:12px}.nameField{font-size:12px}}
+
+  #finalBossHud{position:absolute;top:150px;left:50%;transform:translateX(-50%);width:min(80vw,520px);z-index:13;background:#160d22ee;padding:10px 14px;border:1px solid #d88bff80;border-radius:12px;color:#efd7ff;font-size:13px;font-weight:800;pointer-events:none}
+  #finalBossHpText{float:right;font-size:11px;color:#dbcae6}
+  .finalBossTrack{height:8px;background:#ffffff15;border-radius:8px;overflow:hidden;margin-top:7px}
+  #finalBossHpFill{height:100%;background:linear-gradient(90deg,#922cff,#ff678a);width:100%}
+  #campusEventAlert{top:218px}
+
+  #statsPanel{position:absolute;right:12px;top:153px;width:176px;z-index:19;color:#e6edf7;background:rgba(11,18,29,.88);border:1px solid #a7c2ed40;border-radius:12px;font-size:11px;box-shadow:0 6px 18px #0003;backdrop-filter:blur(5px);touch-action:pan-y}
+  #statsPanel summary{padding:11px 10px;cursor:pointer;font-weight:800;user-select:none}
+  #statsLevel{float:right;font-size:10px;color:#8debd8}
+  #statsBody{padding:0 10px 10px;max-height:calc(100dvh - 390px);overflow-y:auto;touch-action:pan-y;overscroll-behavior:contain}
+  .statsHint{color:#9eacbf;font-size:10px;margin:0 0 7px}
+  #statValues{margin:0;display:grid;grid-template-columns:1fr auto;gap:6px 4px;font-variant-numeric:tabular-nums}
+  #statValues dt{color:#adbad0}#statValues dd{margin:0;text-align:right;color:#f4f8ff;font-weight:700}
+  .statsSection{border-top:1px solid #ffffff20;padding-top:8px;margin-top:9px;color:#a3e9d6;font-weight:700}
+  #statusValues{font-size:10px;line-height:1.65;color:#dee1ed;margin-top:4px}
+  .statsGrowth{font-size:9px;line-height:1.5;color:#9eacbf;margin:8px 0 0}
+  @media(max-width:600px){#statsPanel{right:8px;width:148px;font-size:10px}#statsPanel summary{padding:9px 8px}#statsBody{padding:0 8px 8px}#statValues{gap:5px 3px}}
+  @media(max-height:540px){#statsPanel{top:150px}#statsBody{max-height:110px}}
 </style>
 </head>
 <body>
 <div id="wrap">
   <canvas id="game"></canvas>
+  <button id="pauseBtn" type="button" class="hidden">⏸ 일시정지</button>
+  <div id="pauseScreen" class="hidden"><div class="edition">TAKE A BREATHER</div><h1>잠깐 쉬어가기</h1><p class="sub">게임 시간이 멈췄습니다.<br>준비되면 다시 캠퍼스로 돌아가세요.</p><button id="resumeBtn" class="big">계속하기</button></div>
   <audio id="bgm" loop preload="auto"></audio>
+  <details id="statsPanel" class="hidden" open>
+    <summary>📊 내 스탯 <span id="statsLevel">Lv.1</span></summary>
+    <div id="statsBody">
+      <p class="statsHint">버프가 반영된 현재 수치</p>
+      <dl id="statValues"></dl>
+      <div class="statsSection">상태 · 장비</div><div id="statusValues"></div>
+      <p class="statsGrowth">레벨마다 자동 성장<br>공격 +3% · 이속 +1%<br>탄속 +2% · 치명타 +0.5%p</p>
+    </div>
+  </details>
   <button id="musicBtn" type="button">🎵 음악 켜기</button>
   <button id="ultimateBtn" type="button">🔥 선아쌤 필살기<span class="count" id="ultimateCount">3 / 3회</span></button>
   <button id="jjamppongBtn" type="button">🍜 짬뽕 필살기<span class="count" id="jjamppongCount">3 / 3회</span></button>
@@ -176,7 +224,7 @@
       <div id="sunaAvatar">👩‍🏫</div>
       <div id="sunaText">
         <div id="sunaName">선아쌤</div>
-        <div id="sunaLine">다들 사라없어져라!</div>
+        <div id="sunaLine">다들 사라져라!</div>
       </div>
     </div>
   </div>
@@ -193,6 +241,7 @@
   </div>
 
   <div id="hint">WASD / 방향키 이동 · 자동 사격 · 🌀 회전 무기 · 🔫 머신건 · 🍱점심 · 🚨순찰 · 📢종례 · 🔥 선아쌤(Q) · 🍜 짬뽕(E) 필살기</div>
+  <div id="finalBossHud" class="hidden"><div>☠ 최종보스 · 중도포기 <span id="finalBossHpText"></span></div><div class="finalBossTrack"><div id="finalBossHpFill"></div></div></div>
   <div id="bossAlert">⚠️ 결석 출현!</div>
   <div id="campusEventAlert" aria-live="polite"><div class="eventTitle"></div><div class="eventDesc"></div></div>
 
@@ -202,16 +251,14 @@
   </div>
 
   <div id="startScreen">
+    <div class="edition">CAMPUS SURVIVORS / FINAL EDITION</div>
     <h1>동아MX : 청암대학교 서바이버즈</h1>
-    <p class="sub">
-      주인공 <b style="color:#fff">동아MX</b>가 청암대학교 캠퍼스에서 출결 몬스터를 상대합니다.<br>
-      몹 처치 시 화면 흔들림·히트스톱·충격파로 타격감이 강화되며, 경험치는 기존보다 3배 빠르게 획득합니다.<br>
-      아이템은 기존보다 약 2배 자주 등장하고, 폭탄/폭발탄으로 범위 공격도 가능합니다.<br>
-      레벨업으로 회전 무기와 머신건을 해금할 수 있으며, 60초마다 강력한 중간보스가 등장합니다.<br>
-      위기 상황에서는 <b style="color:#ffd166">선아쌤 필살기</b>를 최대 3번 사용해 화면의 모든 몬스터를 한 번에 정리할 수 있습니다.<br>
-      순천 캠퍼스에서는 <b style="color:#ffe08a">점심시간 버프</b>, <b style="color:#ff8fa3">분원장 긴급순찰</b>, <b style="color:#8fe9ff">종례 타임</b> 이벤트도 발생합니다.<br>
-      추가로 <b style="color:#ff9f43">짬뽕 필살기</b>를 누르면 하늘에서 짬뽕이 쏟아져 몬스터를 공격하며, 매운맛에 쓰러진 몬스터는 “매워!”라고 외칩니다.
-    </p>
+    <p class="sub">출결 몬스터가 몰려오는 청암대학교.<br>10분을 버티고 최종보스 ‘중도포기’를 쓰러뜨려 수료하세요.<br>보스는 종례 정지에 면역입니다. 돌진·바닥 공격 예고를 보고 피하세요.</p>
+    <div class="featureChips"><span>🍜 짬뽕 폭우 · E</span><span>🔥 선아쌤 필살기 · Q</span><span>🍱 점심 버프</span><span>🚨 긴급순찰</span><span>📢 종례 타임</span><span>👹 60초마다 보스</span><span>☠️ 중도포기 · 3단계 고난도 보스</span><span>➜ 영구 관통탄 강화</span><span>📈 레벨마다 기본 스탯 성장</span></div>
+    <p class="storageNote">WASD / 방향키 이동 · 자동 공격 · P / Esc 일시정지<br>모바일: 왼쪽 아래를 드래그해 이동 · 오른쪽 필살기 버튼 터치</p>
+    <label class="nameField">랭킹 닉네임 <input id="playerName" maxlength="12" placeholder="동아MX" autocomplete="off" aria-label="랭킹 닉네임"></label>
+    <label class="nameField">치트키 <input id="cheatCode" maxlength="16" placeholder="치트키 입력 (선택)" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="치트키"></label>
+    <p id="cheatStatus" class="storageNote" aria-live="polite">비워두면 일반 모드로 시작합니다.</p>
     <div id="rankingPanel">
       <div class="rankingHead">
         <div class="rankingTitle">🏆 동아MX 누적 랭킹 TOP 10</div>
@@ -219,11 +266,12 @@
       </div>
       <div id="rankingList"></div>
     </div>
-    <button class="big" id="startBtn">게임 시작</button>
+    <p class="storageNote" id="storageNote">기록은 현재 브라우저에 저장됩니다. 다른 기기와 공유되지 않습니다.</p>
+    <button class="big" id="startBtn">캠퍼스 생존 시작 →</button>
   </div>
 
   <div id="gameOverScreen" class="hidden">
-    <h1 style="background:none;-webkit-text-fill-color:initial;color:var(--hp)">GAME OVER</h1>
+    <h1 id="resultTitle" style="background:none;-webkit-text-fill-color:initial;color:var(--hp)">GAME OVER</h1><p id="resultMessage" class="sub"></p>
     <div id="statLine">
       <span>생존 시간 <b id="finalTime">00:00</b></span>
       <span>처치 수 <b id="finalKills">0</b></span>
@@ -231,12 +279,13 @@
       <span>점수 <b id="finalScore">0</b></span>
     </div>
     <div id="currentRankText"></div>
-    <button class="big" id="restartBtn">다시 시작</button>
+    <button class="big" id="restartBtn">다시 도전</button>
+    <button class="secondary" id="menuBtn">메인 · 랭킹 보기</button>
   </div>
 
   <div id="levelUpScreen" class="hidden">
     <h2>레벨 업!</h2>
-    <p class="sub">강화를 하나 선택하세요</p>
+    <p class="sub">강화를 하나 선택하세요</p><p class="sub" style="color:#9df2d6;font-size:12px">기본 성장 적용 완료: 공격력 +3% · 이동속도 +1%<br>탄속 +2% · 치명타 확률 +0.5%p (최대 100%)</p>
     <div id="upgradeOptions"></div>
   </div>
 </div>
@@ -284,7 +333,11 @@
 
   // ---------------- Input ----------------
   const keys = {};
-  window.addEventListener('keydown', e => keys[e.key.toLowerCase()] = true);
+  window.addEventListener('keydown', e => {
+    if(e.target instanceof HTMLInputElement)return;
+    if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key))e.preventDefault();
+    keys[e.key.toLowerCase()] = true;
+  });
   window.addEventListener('keyup', e => keys[e.key.toLowerCase()] = false);
 
   let joyVec = {x:0,y:0};
@@ -439,6 +492,15 @@
   let hitStop=0;
   let nextMiniBossAt=60;
   let bossCount=0;
+  let finalBossSpawned=false;
+  let finalBossDefeated=false;
+  let cheatMode=false;
+  const CHEAT_MAX_STATS=Object.freeze({level:100,xp:0,damage:250,maxHp:1000,hp:1000,
+    speed:480,projSpeed:1200,critChance:1,fireRate:70,projCount:12,
+    pickupRadius:350,regen:10,pierceLevel:20,splashRadius:160,splashDamageRatio:.9,
+    orbitCount:8,orbitRadius:120,orbitSpeed:4,orbitDamage:180,
+    machineGunLevel:10,mgFireRate:55,mgDamageRatio:1});
+  let bossZones=[];
   let bossAlertTimer=0;
   let ultimateCharges=3;
   let ultimateSequenceToken=0;
@@ -446,6 +508,40 @@
   let jjamppongRain=[];
   let jjamppongRainTimer=0;
   let jjamppongSpawnCooldown=0;
+  let spicyEffectsRemaining=8;
+  const JJAMPPONG_CELL_SIZE=192;
+  function buildJjamppongIndex(){
+    const cells=new Map();let maxRadius=0;
+    for(const e of enemies){
+      if(e._dead)continue;
+      maxRadius=Math.max(maxRadius,e.r);
+      const key=Math.floor(e.x/JJAMPPONG_CELL_SIZE)+','+Math.floor(e.y/JJAMPPONG_CELL_SIZE);
+      let bucket=cells.get(key);
+      if(!bucket){bucket=[];cells.set(key,bucket)}
+      bucket.push(e);
+    }
+    return {cells,maxRadius};
+  }
+  function nearbyJjamppongEnemies(index,x,y,radius){
+    if(!index)return enemies;
+    const reach=radius+index.maxRadius,candidates=[];
+    for(let gx=Math.floor((x-reach)/JJAMPPONG_CELL_SIZE);gx<=Math.floor((x+reach)/JJAMPPONG_CELL_SIZE);gx++){
+      for(let gy=Math.floor((y-reach)/JJAMPPONG_CELL_SIZE);gy<=Math.floor((y+reach)/JJAMPPONG_CELL_SIZE);gy++){
+        const bucket=index.cells.get(gx+','+gy);
+        if(bucket)for(const enemy of bucket)candidates.push(enemy);
+      }
+    }
+    return candidates;
+  }
+  // Rasterize the emoji and its glow once, instead of every falling bowl each frame.
+  const jjamppongSprite=document.createElement('canvas');
+  jjamppongSprite.width=jjamppongSprite.height=96;
+  const jjamppongSpriteCtx=jjamppongSprite.getContext('2d');
+  jjamppongSpriteCtx.font='48px sans-serif';
+  jjamppongSpriteCtx.textAlign='center';jjamppongSpriteCtx.textBaseline='middle';
+  jjamppongSpriteCtx.shadowColor='#ff5a36';jjamppongSpriteCtx.shadowBlur=10;
+  jjamppongSpriteCtx.fillText('🍜',48,48);
+
   let nextLunchAt=45;
   let lunchBuffTimer=0;
   let nextPatrolAt=75;
@@ -464,21 +560,26 @@
     critChance:.05,regen:0,invuln:0,
     walkPhase:0,moving:false,facingLeft:false,
     aimAngle:0,muzzleFlash:0,
-    splashRadius:0,splashDamageRatio:.55,splashTimer:0,
+    splashRadius:0,splashDamageRatio:.55,splashTimer:0,pierceLevel:0,
     orbitCount:0,orbitRadius:78,orbitSpeed:2.5,orbitDamage:10,orbitAngle:0,
     machineGunLevel:0,mgCooldown:0,mgFireRate:120,mgDamageRatio:.42
   };
 
   function resetGame(){
+    cheatMode=document.getElementById('cheatCode').value.trim().toLowerCase()==='hodoo';
     Object.assign(player,{
       x:0,y:0,r:14,speed:220,hp:100,maxHp:100,
       level:1,xp:0,xpToNext:8,damage:10,fireRate:650,cooldown:0,
       projCount:1,pickupRadius:85,projSpeed:460,critChance:.05,regen:0,invuln:0,
       walkPhase:0,moving:false,facingLeft:false,aimAngle:0,muzzleFlash:0,
-      splashRadius:0,splashDamageRatio:.55,splashTimer:0,
+      splashRadius:0,splashDamageRatio:.55,splashTimer:0,pierceLevel:0,
       orbitCount:0,orbitRadius:78,orbitSpeed:2.5,orbitDamage:10,orbitAngle:0,
       machineGunLevel:0,mgCooldown:0,mgFireRate:120,mgDamageRatio:.42
     });
+    if(cheatMode){Object.assign(player,CHEAT_MAX_STATS);player.xpToNext=xpNeeded(player.level)}
+    finalBossSpawned=false;finalBossDefeated=false;bossZones=[];
+    document.getElementById('finalBossHud').classList.add('hidden');
+    document.getElementById('bossAlert').textContent='⚠️ 결석 출현!';
     camera.x=camera.y=0;
     elapsed=0;killCount=0;lastSpawn=0;spawnInterval=1400;
     bonusSpawnTimer=0;bonusSpawnInterval=3;
@@ -488,7 +589,7 @@
     ultimateCharges=3;
     jjamppongCharges=3;
     jjamppongRainTimer=0;
-    jjamppongSpawnCooldown=0;
+    jjamppongSpawnCooldown=0;spicyEffectsRemaining=8;
     ultimateSequenceToken++;
     ultimateOverlay.classList.remove('show','blast');
     ultimateOverlay.setAttribute('aria-hidden','true');
@@ -504,6 +605,9 @@
 
   // ---------------- Enemy ----------------
   function spawnEnemy(){
+    for(let i=0;i<(cheatMode?10:1);i++)spawnSingleEnemy();
+  }
+  function spawnSingleEnemy(){
     const t=elapsed;
     const angle=Math.random()*Math.PI*2;
     const dist=Math.max(W,H)/2+80;
@@ -525,6 +629,9 @@
   }
 
   function spawnMiniBoss(){
+    for(let i=0;i<(cheatMode?10:1);i++)spawnSingleMiniBoss();
+  }
+  function spawnSingleMiniBoss(){
     const angle=Math.random()*Math.PI*2;
     const dist=Math.max(W,H)/2+120;
     const x=player.x+Math.cos(angle)*dist;
@@ -538,8 +645,90 @@
     });
     bossAlertTimer=2.4;
     document.getElementById('bossAlert').classList.add('show');
-    screenShake=Math.max(screenShake,16);
+    screenShake=Math.max(screenShake,5);
     addShockwave(player.x,player.y,120,'#ff5c5c',.45);
+  }
+
+  function spawnFinalBoss(){
+    if(finalBossSpawned)return;
+    finalBossSpawned=true;
+    const hp=60000;
+    const distance=Math.max(180,Math.min(W,H)*.38);
+    enemies.push({x:player.x+distance,y:player.y,r:48,hp,maxHp:hp,speed:100,
+      dmg:55,xp:150,type:'boss',isFinal:true,name:'중도포기',hitFlash:0,
+      walkPhase:0,dashCooldown:3,dashTimer:0,dashWindup:0,dashX:0,dashY:0,phase:1,zoneCooldown:3,summonCooldown:9});
+    bossAlertTimer=4;
+    document.getElementById('bossAlert').textContent='☠️ 최종보스 중도포기 출현!';
+    document.getElementById('bossAlert').classList.add('show');
+    showCampusEvent('☠️','최종보스 · 중도포기','3단계 최종전! 보라색 공격 예고를 피하세요. 방어력 35% · 필살기 저항','patrol');
+    addShockwave(player.x+distance,player.y,100,'#c48aff',.4);
+    updateHUD();
+  }
+
+  function damageAfterArmor(enemy,damage){
+    return enemy.isFinal?Math.min(damage*.65,enemy.maxHp*.03):damage;
+  }
+
+  function updateFinalBoss(b,dt){
+    const phase=b.hp/b.maxHp<=.3?3:b.hp/b.maxHp<=.65?2:1;
+    if(phase>b.phase){
+      b.phase=phase;
+      showCampusEvent('☠️',phase===3?'중도포기 · 최종 광폭화!':'중도포기 · 2단계 돌입!',
+        '돌진·범위 공격이 더 빨라집니다. 바닥의 공격 예고를 피하세요!','patrol');
+    }
+    b.dmg=[0,55,65,75][phase];
+    b.zoneCooldown-=dt;b.summonCooldown-=dt;
+    if(b.zoneCooldown<=0){
+      b.zoneCooldown=[0,4.8,3.8,2.9][phase];
+      for(let i=0;i<phase;i++){
+        const angle=Math.PI*2*i/phase;
+        bossZones.push({x:player.x+(i?Math.cos(angle)*140:0),y:player.y+(i?Math.sin(angle)*140:0),
+          r:phase===3?105:85,timer:1.15,active:0,damage:[0,35,45,55][phase]});
+      }
+    }
+    if(b.summonCooldown<=0){
+      b.summonCooldown=phase===3?8:12;
+      const liveAdds=enemies.filter(e=>!e.isFinal&&!e._dead).length;
+      const multiplier=cheatMode?10:1;
+      const count=Math.max(0,Math.min(phase*2*multiplier,12*multiplier-liveAdds));
+      for(let i=0;i<count;i++){
+        const a=Math.PI*2*i/Math.max(1,count),hp=600+phase*220;
+        enemies.push({x:player.x+Math.cos(a)*340,y:player.y+Math.sin(a)*340,
+          r:17,hp,maxHp:hp,speed:95+phase*12,dmg:20+phase*5,xp:12,
+          type:'fast',name:'포기 유혹',hitFlash:0,walkPhase:0});
+      }
+    }
+    if(b.dashWindup>0){
+      b.dashWindup=Math.max(0,b.dashWindup-dt);
+      if(b.dashWindup===0)b.dashTimer=.48;
+      return;
+    }
+    if(b.dashTimer>0){
+      b.x+=b.dashX*(400+phase*65)*dt;b.y+=b.dashY*(400+phase*65)*dt;
+      b.dashTimer=Math.max(0,b.dashTimer-dt);return;
+    }
+    b.dashCooldown-=dt;
+    const dx=player.x-b.x,dy=player.y-b.y,d=Math.hypot(dx,dy)||1;
+    if(b.dashCooldown<=0){
+      b.dashX=dx/d;b.dashY=dy/d;b.dashWindup=.7;
+      b.dashCooldown=[0,4.8,3.6,2.7][phase];return;
+    }
+    b.x+=dx/d*(75+phase*25)*dt;b.y+=dy/d*(75+phase*25)*dt;
+  }
+
+  function updateBossZones(dt){
+    for(const z of bossZones){
+      if(z.timer>0){z.timer-=dt;if(z.timer<=0)z.active=.22;else continue}
+      if(z.active>0){
+        z.active-=dt;
+        if(Math.hypot(player.x-z.x,player.y-z.y)<z.r+player.r && player.invuln<=0){
+          player.hp=Math.max(0,player.hp-z.damage);player.invuln=.65;
+          addFloatText(player.x,player.y-25,'-'+z.damage,'#dca1ff');
+          if(player.hp<=0){triggerGameOver();return}
+        }
+      }
+    }
+    bossZones=bossZones.filter(z=>z.timer>0||z.active>0);
   }
 
   function findNearestEnemy(x,y){
@@ -576,6 +765,7 @@
         vx:Math.cos(ang)*player.projSpeed,
         vy:Math.sin(ang)*player.projSpeed,
         r:4.5,life:1.5,dmg:player.damage*(patrolTimer>0?1.30:1),
+        pierceRemaining:player.pierceLevel,hitEnemies:new Set(),
         splashRadius,
         splashDamageRatio:player.splashDamageRatio
       });
@@ -593,22 +783,24 @@
     projectiles.push({
       x:player.x+Math.cos(ang)*28,y:player.y-4+Math.sin(ang)*28,
       vx:Math.cos(ang)*(player.projSpeed*1.25),vy:Math.sin(ang)*(player.projSpeed*1.25),
-      r:3.2,life:1.15,dmg,kind:'mg',splashRadius:0,splashDamageRatio:0
+      r:3.2,life:1.15,dmg,kind:'mg',pierceRemaining:player.pierceLevel,hitEnemies:new Set(),splashRadius:0,splashDamageRatio:0
     });
     player.aimAngle=base;player.facingLeft=Math.cos(base)<0;player.muzzleFlash=.045;
   }
 
   function addFloatText(x,y,text,color){
+    if(floatTexts.length>=140)floatTexts.shift();
     floatTexts.push({x,y,text,color,life:.8,vy:-40});
   }
   function addShockwave(x,y,maxR,color='#ffd166',life=.28){
+    if(shockwaves.length>=100)shockwaves.shift();
     shockwaves.push({x,y,r:6,maxR,color,life,maxLife:life});
   }
   function burstParticles(x,y,count,power,colors){
-    for(let i=0;i<count;i++){
+    for(let i=0;i<count&&particles.length<600;i++){
       const a=Math.random()*Math.PI*2;
       const sp=50+Math.random()*power;
-      particles.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:.2+Math.random()*.4,color:colors[(Math.random()*colors.length)|0]});
+      particles.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:.12+Math.random()*.18,color:colors[(Math.random()*colors.length)|0]});
     }
   }
 
@@ -616,24 +808,31 @@
     if(e._dead)return;
     e._dead=true;
     killCount++;
+    if(e.isFinal){
+      finalBossDefeated=true;
+      addShockwave(e.x,e.y,110,'#d8b4ff',.3);
+      triggerGameOver(true);
+      return;
+    }
 
     const isBoss=e.type==='boss';
     const spicy=cause==='jjamppong';
-    if(spicy){
+    const showSpicyEffect=!spicy||spicyEffectsRemaining-->0;
+    if(spicy&&showSpicyEffect){
       addFloatText(e.x,e.y-(isBoss?58:34),'매워! 🌶️','#ff543d');
-      burstParticles(e.x,e.y,isBoss?24:10,isBoss?330:190,['#ff3b30','#ff7043','#ffb347','#ffd166']);
+      burstParticles(e.x,e.y,isBoss?10:4,isBoss?170:100,['#ff3b30','#ff7043','#ffb347','#ffd166']);
     }
-    hitStop=Math.max(hitStop,spicy?(isBoss?.045:.018):(isBoss?.11:(e.type==='tank'?.065:.035)));
-    screenShake=Math.max(screenShake,isBoss?24:(e.type==='tank'?15:8));
-    addShockwave(e.x,e.y,isBoss?145:(e.type==='tank'?75:45),isBoss?'#ff3b3b':(e.type==='tank'?'#ff7043':'#ffd166'));
-    burstParticles(e.x,e.y,isBoss?42:(e.type==='tank'?20:12),isBoss?420:(e.type==='tank'?260:180),isBoss?['#ff3b3b','#ff8c42','#ffd166','#ffffff']:['#7c9a5c','#a8b83f','#ffb347','#ffd166']);
+    // Keep feedback at the enemy: ordinary kills never shake or freeze the camera.
+    if(isBoss&&!spicy){hitStop=Math.max(hitStop,.025);screenShake=Math.max(screenShake,4)}
+    if(showSpicyEffect)addShockwave(e.x,e.y,isBoss?65:(e.type==='tank'?30:22),isBoss?'#ff8c42':'#ffd166',isBoss?.24:.16);
+    if(showSpicyEffect)burstParticles(e.x,e.y,isBoss?14:5,isBoss?180:95,isBoss?['#ff8c42','#ffd166','#ffffff']:['#b8d57a','#ffd166','#ffffff']);
 
     let dropCount=1;
     if(isBoss)dropCount=10;
     else if(e.type==='tank')dropCount=3;
     else if(Math.random()<.25)dropCount=2;
 
-    for(let i=0;i<dropCount;i++){
+    for(let i=0;i<dropCount&&!cheatMode;i++){
       const a=Math.random()*Math.PI*2;
       const rd=Math.random()*(isBoss?42:18);
       gems.push({x:e.x+Math.cos(a)*rd,y:e.y+Math.sin(a)*rd,value:isBoss?Math.max(4,Math.round(e.xp/3)):e.xp,r:isBoss?7:6});
@@ -649,8 +848,8 @@
 
   function explodeAt(x,y,radius,damage,color='#ff8c42'){
     addShockwave(x,y,radius,color,.34);
-    screenShake=Math.max(screenShake,12);
-    hitStop=Math.max(hitStop,.03);
+    screenShake=Math.max(screenShake,5);
+    hitStop=Math.max(hitStop,.015);
     burstParticles(x,y,24,300,['#ff7043','#ff9f43','#ffd166','#fff3bf']);
 
     for(const e of enemies){
@@ -659,20 +858,31 @@
       if(d>radius)continue;
       const falloff=1-(d/radius)*.45;
       const dealt=Math.max(1,damage*falloff);
-      e.hp-=dealt;e.hitFlash=.14;
+      e.hp-=damageAfterArmor(e,dealt);e.hitFlash=.14;
       addFloatText(e.x,e.y-10,Math.round(dealt),'#ffcc80');
       if(e.hp<=0)killEnemy(e);
+            if(state==='victory')return;
     }
   }
 
   // ---------------- XP ----------------
   function xpNeeded(lvl){return Math.round(8+lvl*lvl*1.6+lvl*4)}
+  function advanceLevel(){
+    if(cheatMode)return;
+    player.level++;
+    player.xpToNext=xpNeeded(player.level);
+    player.damage*=1.03;
+    player.speed*=1.01;
+    player.projSpeed*=1.02;
+    player.critChance=Math.min(1,player.critChance+.005);
+    updateHUD();
+  }
   function gainXp(amount){
+    if(cheatMode)return;
     player.xp+=amount*XP_MULTIPLIER;
-    while(player.xp>=player.xpToNext){
+    while(state==='playing' && player.xp>=player.xpToNext){
       player.xp-=player.xpToNext;
-      player.level++;
-      player.xpToNext=xpNeeded(player.level);
+      advanceLevel();
       triggerLevelUp();
       break;
     }
@@ -728,6 +938,7 @@
   }
 
   const UPGRADE_POOL=[
+    {icon:'➜',name:'관통탄 강화',desc:'일반 총알·머신건의 관통 대상 +1 · 이번 플레이 동안 영구 유지',apply:()=>player.pierceLevel++},
     {icon:'🔫',name:'공격력 증가',desc:'총알 데미지 +30%',apply:()=>player.damage*=1.3},
     {icon:'⚡',name:'연사 속도 증가',desc:'재발사 간격 -15%',apply:()=>player.fireRate*=.85},
     {icon:'🔱',name:'멀티샷',desc:'동시 발사 수 +1',apply:()=>player.projCount++},
@@ -735,7 +946,7 @@
     {icon:'❤️',name:'최대 체력 증가',desc:'최대 HP +25, 즉시 25 회복',apply:()=>{player.maxHp+=25;player.hp=Math.min(player.maxHp,player.hp+25)}},
     {icon:'💚',name:'체력 재생',desc:'초당 체력 회복 +1',apply:()=>player.regen++},
     {icon:'🧲',name:'수집 범위 증가',desc:'획득 범위 +30%',apply:()=>player.pickupRadius*=1.3},
-    {icon:'🎯',name:'치명타 강화',desc:'치명타 확률 +8%',apply:()=>player.critChance+=.08},
+    {icon:'🎯',name:'치명타 강화',desc:'치명타 확률 +8%p · 최대 100%',apply:()=>player.critChance=Math.min(1,player.critChance+.08)},
     {icon:'💥',name:'폭발탄 개조',desc:'총알 명중 시 주변 적에게 영구 스플래시 피해',apply:()=>{player.splashRadius+=48;player.splashDamageRatio=Math.min(.9,player.splashDamageRatio+.05)}},
     {icon:'🚀',name:'탄속 증가',desc:'총알 속도 +18%',apply:()=>player.projSpeed*=1.18},
     {icon:'🌀',name:'회전 무기',desc:'캐릭터 주변을 도는 공격체 +1 · 접촉한 적 연속 타격',apply:()=>{player.orbitCount++;player.orbitDamage*=1.16;player.orbitRadius+=3}},
@@ -752,11 +963,16 @@
   }
 
   function triggerLevelUp(){
+    if(cheatMode)return;
+    if(state==='victory'||state==='gameover')return;
     state='levelup';
     const container=document.getElementById('upgradeOptions');
     container.innerHTML='';
     for(const opt of pickUpgrades(3)){
-      const card=document.createElement('div');
+      const card=document.createElement('button');
+      card.type='button';
+      card.style.color='inherit';
+      card.style.fontFamily='inherit';
       card.className='upgradeCard';
       card.innerHTML=`<span class="icon">${opt.icon}</span><div class="name">${opt.name}</div><div class="desc">${opt.desc}</div>`;
       card.addEventListener('click',()=>{
@@ -764,6 +980,8 @@
         document.getElementById('levelUpScreen').classList.add('hidden');
         state='playing';
         lastFrame=performance.now();
+        resolveUltimateLevelUps();
+        updateHUD();
       });
       container.appendChild(card);
     }
@@ -781,13 +999,22 @@
     const living=enemies.filter(e=>!e._dead);
     if(living.length===0){
       addShockwave(player.x,player.y,Math.hypot(W,H)*.7,'#fff4b0',.65);
-      screenShake=Math.max(screenShake,24);
+      screenShake=Math.max(screenShake,5);
       return 0;
     }
 
     let bosses=0;
     let xpReward=0;
+    let finalToFinish=null;
     for(const e of living){
+      if(e.isFinal){
+        const damage=e.maxHp*.15;
+        e.hp-=damage;e.hitFlash=.2;
+        addFloatText(e.x,e.y-65,'필살기 저항! -'+Math.round(damage),'#dca1ff');
+        if(e.hp<=0)finalToFinish=e;
+        continue;
+      }
+      e._dead=true;
       killCount++;
       xpReward+=Math.max(1,e.xp||1);
       if(e.type==='boss')bosses++;
@@ -796,14 +1023,14 @@
       }
     }
 
-    enemies=[];
+    enemies=enemies.filter(e=>e.isFinal&&!e._dead);
     projectiles=[];
     addShockwave(player.x,player.y,Math.hypot(W,H)*1.15,'#fff4b0',.75);
     addShockwave(player.x,player.y,Math.hypot(W,H)*.75,'#ff684f',.58);
     burstParticles(player.x,player.y,56,520,['#fff3a0','#ffffff','#ff8c42','#ff4d6d']);
-    screenShake=Math.max(screenShake,34);
-    hitStop=Math.max(hitStop,.10);
-    addFloatText(player.x,player.y-48,'전 맵 정리! ×'+living.length,'#fff3a0');
+    screenShake=Math.max(screenShake,5);
+    hitStop=Math.max(hitStop,.025);
+    addFloatText(player.x,player.y-48,'필살기! 잡몹 정리 · 보스 최대 HP 15% 피해','#fff3a0');
 
     for(let i=0;i<bosses;i++){
       const a=Math.random()*Math.PI*2;
@@ -812,14 +1039,16 @@
 
     // 필살기 보상 XP. 레벨업 팝업은 필살기 연출 종료 뒤 정상적으로 발생한다.
     player.xp+=Math.max(0,Math.round(xpReward*.18))*XP_MULTIPLIER;
+    if(finalToFinish)killEnemy(finalToFinish);
+    if(finalBossDefeated){screenShake=0;hitStop=0;}
     return living.length;
   }
 
   function resolveUltimateLevelUps(){
+    if(cheatMode){player.xp=0;return false;}
     if(player.xp>=player.xpToNext){
       player.xp-=player.xpToNext;
-      player.level++;
-      player.xpToNext=xpNeeded(player.level);
+      advanceLevel();
       triggerLevelUp();
       return true;
     }
@@ -886,24 +1115,28 @@
     });
   }
 
-  function impactJjamppong(drop){
+  function impactJjamppong(drop,index){
     const x=drop.targetX,y=drop.targetY;
     const radius=92;
     const damage=80+player.damage*3.4;
     addShockwave(x,y,radius,'#ff5a36',.34);
-    burstParticles(x,y,18,250,['#ff3b30','#ff7043','#ff9f43','#ffd166','#fff0b5']);
-    screenShake=Math.max(screenShake,8);
+    burstParticles(x,y,6,140,['#ff3b30','#ff7043','#ff9f43','#ffd166','#fff0b5']);
 
-    for(const e of enemies){
+
+    for(const e of nearbyJjamppongEnemies(index,x,y,radius)){
       if(e._dead)continue;
-      const d=Math.hypot(e.x-x,e.y-y);
-      if(d>radius+e.r)continue;
+      const dx=e.x-x,dy=e.y-y,range=radius+e.r;
+      const distanceSquared=dx*dx+dy*dy;
+      if(distanceSquared>range*range)continue;
+      const d=Math.sqrt(distanceSquared);
       const falloff=1-Math.min(.55,d/(radius+e.r)*.55);
       const dealt=damage*falloff;
-      e.hp-=dealt;
+      const actualDamage=damageAfterArmor(e,dealt);
+      e.hp-=actualDamage;
       e.hitFlash=.15;
-      addFloatText(e.x,e.y-10,Math.round(dealt),'#ffcc80');
+      if(e.hp>0&&(e.isFinal||spicyEffectsRemaining-->0))addFloatText(e.x,e.y-10,Math.round(actualDamage),'#ffcc80');
       if(e.hp<=0)killEnemy(e,'jjamppong');
+      if(state==='victory')return;
     }
   }
 
@@ -912,7 +1145,7 @@
     jjamppongCharges--;
     jjamppongRainTimer=3.2;
     jjamppongSpawnCooldown=0;
-    screenShake=Math.max(screenShake,7);
+    screenShake=Math.max(screenShake,5);
     showCampusEvent('🍜','짬뽕 필살기!','하늘에서 매운 짬뽕 폭우가 쏟아집니다! 몬스터들: “매워!!”','lunch');
     addFloatText(player.x,player.y-48,'🍜 짬뽕 폭우 발동!','#ff9f43');
     updateJjamppongButton();
@@ -948,7 +1181,7 @@
   function triggerPatrol(){
     nextPatrolAt+=120;
     patrolTimer=12;
-    screenShake=Math.max(screenShake,12);
+    screenShake=Math.max(screenShake,5);
     addShockwave(player.x,player.y,130,'#ff5c8a',.45);
     showCampusEvent('🚨','분원장 긴급순찰!','12초간 동아MX 공격력 +30%! 몬스터 이동속도는 변하지 않습니다.','patrol');
   }
@@ -956,13 +1189,14 @@
   function triggerHomeroom(){
     nextHomeroomAt+=120;
     homeroomTimer=7;
-    screenShake=Math.max(screenShake,6);
+    screenShake=Math.max(screenShake,5);
     addShockwave(player.x,player.y,150,'#5ce1ff',.55);
     showCampusEvent('📢','종례 타임!','“자~ 오늘 종례하겠습니다.” 7초간 모든 몬스터가 얌전히 멈춥니다.','homeroom');
   }
 
   // ---------------- Update ----------------
   function update(dt){
+    if(state!=='playing')return;
     if(hitStop>0){hitStop-=dt;return}
 
     elapsed+=dt;
@@ -991,7 +1225,8 @@
     if(elapsed>=nextPatrolAt)triggerPatrol();
     if(elapsed>=nextHomeroomAt)triggerHomeroom();
 
-    if(homeroomTimer<=0){
+    if(elapsed>=600 && !finalBossSpawned)spawnFinalBoss();
+    if(homeroomTimer<=0 && !finalBossSpawned){
       lastSpawn+=dt*1000;
       if(lastSpawn>spawnInterval){
         lastSpawn=0;
@@ -1002,7 +1237,7 @@
       lastSpawn=0;
     }
 
-    if(elapsed>=nextMiniBossAt){
+    if(!finalBossSpawned && elapsed>=nextMiniBossAt){
       spawnMiniBoss();
       nextMiniBossAt+=60;
     }
@@ -1042,7 +1277,7 @@
     }
 
     camera.x=player.x;camera.y=player.y;
-    screenShake=Math.max(0,screenShake-28*dt);
+    screenShake=Math.max(0,screenShake-55*dt);
 
     player.cooldown-=dt*1000;
     if(player.cooldown<=0&&enemies.length){
@@ -1063,9 +1298,10 @@
       const dx=player.x-e.x,dy=player.y-e.y;
       const d=Math.hypot(dx,dy)||1;
       let moveSpeed=homeroomTimer>0?0:e.speed;
-      if(e.type==='boss'&&homeroomTimer<=0){
+      if(e.isFinal){updateFinalBoss(e,dt);moveSpeed=0;}
+      if(e.type==='boss'&&!e.isFinal&&homeroomTimer<=0){
         e.dashCooldown-=dt;
-        if(e.dashCooldown<=0){e.dashTimer=.42;e.dashCooldown=3.1+Math.random()*1.5;screenShake=Math.max(screenShake,5)}
+        if(e.dashCooldown<=0){e.dashTimer=.42;e.dashCooldown=3.1+Math.random()*1.5;screenShake=Math.max(screenShake,1)}
         if(e.dashTimer>0){e.dashTimer-=dt;moveSpeed*=2.35}
       }
       e.x+=(dx/d)*moveSpeed*dt;
@@ -1074,15 +1310,18 @@
       if(e.hitFlash>0)e.hitFlash-=dt;
       if(e.orbitHitCd>0)e.orbitHitCd-=dt;
 
-      if(homeroomTimer<=0&&d<e.r+player.r&&player.invuln<=0){
+      if((e.isFinal||homeroomTimer<=0)&&Math.hypot(player.x-e.x,player.y-e.y)<e.r+player.r&&player.invuln<=0){
         player.hp-=e.dmg;
         player.invuln=.5;
-        screenShake=Math.max(screenShake,10);
+        screenShake=Math.max(screenShake,5);
         addFloatText(player.x,player.y-20,'-'+e.dmg,'#ff5c8a');
         burstParticles(player.x,player.y,8,140,['#ff5c8a','#ff9bb4']);
         if(player.hp<=0){player.hp=0;triggerGameOver();return}
       }
     }
+
+    updateBossZones(dt);
+    if(state==='gameover')return;
 
     // 회전 무기 충돌
     if(player.orbitCount>0){
@@ -1095,33 +1334,38 @@
           const d=Math.hypot(e.x-ox,e.y-oy);
           if(d<e.r+12){
             const dmg=player.orbitDamage*(1+.12*(player.orbitCount-1))*(patrolTimer>0?1.30:1);
-            e.hp-=dmg;e.hitFlash=.1;e.orbitHitCd=.22;
-            screenShake=Math.max(screenShake,2.5);
+            e.hp-=damageAfterArmor(e,dmg);e.hitFlash=.1;e.orbitHitCd=.22;
+
             addFloatText(e.x,e.y-8,Math.round(dmg),'#8be9fd');
             burstParticles(ox,oy,5,100,['#8be9fd','#c4f1ff']);
             if(e.hp<=0)killEnemy(e);
+            if(state==='victory')return;
           }
         }
       }
     }
 
     for(const p of projectiles){
+      p.prevX=p.x;p.prevY=p.y;
       p.x+=p.vx*dt;p.y+=p.vy*dt;p.life-=dt;
     }
 
     for(const p of projectiles){
       if(p._dead)continue;
       for(const e of enemies){
-        if(e._dead)continue;
-        const d=Math.hypot(p.x-e.x,p.y-e.y);
+        if(e._dead||p.hitEnemies.has(e))continue;
+        const sx=p.x-p.prevX,sy=p.y-p.prevY;
+        const fraction=Math.max(0,Math.min(1,((e.x-p.prevX)*sx+(e.y-p.prevY)*sy)/(sx*sx+sy*sy||1)));
+        const d=Math.hypot(p.prevX+sx*fraction-e.x,p.prevY+sy*fraction-e.y);
         if(d<p.r+e.r){
+          p.hitEnemies.add(e);
           let dmg=p.dmg;
           const crit=Math.random()<player.critChance;
           if(crit)dmg*=2;
-          e.hp-=dmg;e.hitFlash=.12;
-          screenShake=Math.max(screenShake,crit?5:2.5);
+          e.hp-=damageAfterArmor(e,dmg);e.hitFlash=.12;
+
           addFloatText(e.x,e.y-10,Math.round(dmg)+(crit?'!':''),crit?'#ffd23f':'#ffffff');
-          burstParticles(p.x,p.y,crit?7:4,110,crit?['#ffd23f','#fff0a3']:['#ffffff','#cfd8ff']);
+          burstParticles(p.x,p.y,crit?5:3,95,crit?['#ffd23f','#fff0a3']:['#ffffff','#cfd8ff']);
 
           if(p.splashRadius>0){
             addShockwave(p.x,p.y,p.splashRadius,'#ff9f43',.22);
@@ -1130,17 +1374,19 @@
               const sd=Math.hypot(other.x-p.x,other.y-p.y);
               if(sd<=p.splashRadius){
                 const splashDmg=p.dmg*p.splashDamageRatio*(1-sd/p.splashRadius*.5);
-                other.hp-=splashDmg;other.hitFlash=.11;
+                other.hp-=damageAfterArmor(other,splashDmg);other.hitFlash=.11;
                 addFloatText(other.x,other.y-8,Math.round(splashDmg),'#ffb86b');
                 if(other.hp<=0)killEnemy(other);
+                if(state==='victory')return;
               }
             }
             burstParticles(p.x,p.y,8,150,['#ff9f43','#ffd166']);
           }
 
-          p._dead=true;
           if(e.hp<=0)killEnemy(e);
-          break;
+            if(state==='victory')return;
+          if(state==='victory')return;
+          if(p.pierceRemaining>0){p.pierceRemaining--}else{p._dead=true;break}
         }
       }
     }
@@ -1163,18 +1409,23 @@
 
     for(const it of bonusItems){
       const d=Math.hypot(player.x-it.x,player.y-it.y);
-      if(d<player.r+it.r){it._dead=true;applyBonusItem(it.type)}
+      if(d<player.r+it.r){it._dead=true;applyBonusItem(it.type);if(state==='victory')return}
     }
     bonusItems=bonusItems.filter(it=>!it._dead);
 
+    // Move first, then reuse one spatial index for all impacts in this frame.
+    const landedJjamppong=[];
     for(const drop of jjamppongRain){
       if(drop._dead)continue;
-      drop.x+=drop.vx*dt;
-      drop.y+=drop.vy*dt;
-      drop.rot+=drop.spin*dt;
-      if(drop.y>=drop.targetY){
-        drop._dead=true;
-        impactJjamppong(drop);
+      drop.x+=drop.vx*dt;drop.y+=drop.vy*dt;drop.rot+=drop.spin*dt;
+      if(drop.y>=drop.targetY){drop._dead=true;landedJjamppong.push(drop)}
+    }
+    if(landedJjamppong.length){
+      spicyEffectsRemaining=8;
+      const jjamppongIndex=buildJjamppongIndex();
+      for(const drop of landedJjamppong){
+        impactJjamppong(drop,jjamppongIndex);
+        if(state==='victory')return;
       }
     }
     jjamppongRain=jjamppongRain.filter(d=>!d._dead);
@@ -1208,7 +1459,7 @@
     try{
       const raw=localStorage.getItem(RANKING_KEY);
       const data=raw?JSON.parse(raw):[];
-      return Array.isArray(data)?data:[];
+      return Array.isArray(data)?data.filter(r=>r && typeof r.name==='string' && [r.score,r.time,r.kills,r.level].every(n=>Number.isFinite(n)&&n>=0)):[];
     }catch(e){
       return [];
     }
@@ -1216,18 +1467,20 @@
 
   function writeRankings(list){
     try{ localStorage.setItem(RANKING_KEY,JSON.stringify(list.slice(0,50))); }
-    catch(e){}
+    catch(e){ document.getElementById('storageNote').textContent='브라우저 저장을 사용할 수 없어 이번 기록은 보관되지 않습니다.'; }
   }
 
   function saveCurrentRanking(){
     const score=calcScore(elapsed,killCount,player.level);
     const record={
       id:Date.now()+'_'+Math.random().toString(36).slice(2,8),
-      name:'동아MX',
+      name:document.getElementById('playerName').value.trim().slice(0,12)||'동아MX',
       score,
       time:Math.floor(elapsed),
       kills:killCount,
       level:player.level,
+      cleared:finalBossDefeated,
+      cheat:cheatMode,
       date:new Date().toLocaleDateString('ko-KR',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'})
     };
     const list=loadRankings();
@@ -1236,6 +1489,8 @@
     writeRankings(list);
     return {record,rank:list.findIndex(r=>r.id===record.id)+1,score};
   }
+
+  const escapeHTML=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
   function renderRankings(){
     const box=document.getElementById('rankingList');
@@ -1252,17 +1507,30 @@
         const cls=i===0?' gold':i===1?' silver':i===2?' bronze':'';
         return '<div class="rankRow'+cls+'">'+
           '<span class="rank">'+medal(i)+'</span>'+
-          '<span class="name">'+(r.name||'동아MX')+' Lv.'+(r.level||1)+'</span>'+
+          '<span class="name">'+escapeHTML(r.name||'동아MX')+(r.cheat?' ⚡CHEAT':'')+(r.cleared?' 🎓':'')+' Lv.'+(r.level||1)+'</span>'+
           '<span class="score">'+Number(r.score||0).toLocaleString()+'</span>'+
           '<span class="num">'+formatTime(r.time||0)+'</span>'+
           '<span class="num">💀 '+(r.kills||0)+'</span>'+
-          '<span class="date">'+(r.date||'-')+'</span>'+
+          '<span class="date">'+escapeHTML(r.date||'-')+'</span>'+
         '</div>';
       }).join('');
   }
 
-  function triggerGameOver(){
-    state='gameover';
+  function triggerGameOver(won=false){
+    if(state==='gameover'||state==='victory')return;
+    state=won?'victory':'gameover';
+    ultimateSequenceToken++;
+    ultimateOverlay.classList.remove('show','blast');
+    ultimateOverlay.setAttribute('aria-hidden','true');
+    bgm.volume=.38;screenShake=0;hitStop=0;bossZones=[];
+    document.getElementById('levelUpScreen').classList.add('hidden');
+    document.getElementById('finalBossHud').classList.add('hidden');
+    document.getElementById('bossAlert').classList.remove('show');
+    document.getElementById('campusEventAlert').classList.remove('show');
+    document.getElementById('resultTitle').textContent=won?'🎓 수료 성공!':'GAME OVER';
+    document.getElementById('resultTitle').style.color=won?'#b8f291':'var(--hp)';
+    document.getElementById('resultMessage').textContent=won?'최종보스 중도포기 처치! 끝까지 버틴 당신이 승리했습니다.':'다시 도전해서 중도포기를 쓰러뜨려보세요.';
+    updateUltimateButton();updateJjamppongButton();
     document.getElementById('finalTime').textContent=formatTime(elapsed);
     document.getElementById('finalKills').textContent=killCount;
     document.getElementById('finalLevel').textContent=player.level;
@@ -1280,11 +1548,21 @@
   }
   function updateHUD(){
     document.getElementById('hpFill').style.width=Math.max(0,player.hp/player.maxHp*100)+'%';
-    document.getElementById('xpFill').style.width=Math.max(0,player.xp/player.xpToNext*100)+'%';
+    document.getElementById('xpFill').style.width=cheatMode?'100%':Math.max(0,player.xp/player.xpToNext*100)+'%';
     document.getElementById('lvlText').textContent=player.level;
     document.getElementById('timeText').textContent=formatTime(elapsed);
     document.getElementById('killText').textContent=killCount;
+    const boss=enemies.find(e=>e.isFinal&&!e._dead);
+    const bossVisible=!!boss&&!['start','gameover','victory'].includes(state);
+    document.getElementById('finalBossHud').classList.toggle('hidden',!bossVisible);
+    if(boss){
+      document.getElementById('finalBossHpFill').style.width=Math.max(0,boss.hp/boss.maxHp*100)+'%';
+      document.getElementById('finalBossHpText').textContent='P'+boss.phase+' · '+Math.ceil(Math.max(0,boss.hp)).toLocaleString()+' / '+boss.maxHp.toLocaleString();
+    }
     const buffs=[];
+    if(cheatMode)buffs.push('⚡ HODOO · MAX Lv.100 · 몬스터 ×10');
+    if(!finalBossSpawned)buffs.push('☠️ 최종보스까지 '+formatTime(Math.max(0,600-elapsed)));
+    if(player.pierceLevel>0)buffs.push('➜ 관통 Lv.'+player.pierceLevel);
     if(player.splashRadius>0)buffs.push('💥 영구 스플래시 '+Math.round(player.splashRadius));
     if(player.splashTimer>0)buffs.push('🔥 폭발탄 '+player.splashTimer.toFixed(1)+'초');
     if(player.orbitCount>0)buffs.push('🌀 회전무기 ×'+player.orbitCount);
@@ -1295,8 +1573,45 @@
     if(jjamppongRainTimer>0)buffs.push('🍜 짬뽕폭우 '+jjamppongRainTimer.toFixed(1)+'초');
     buffs.push('✨ XP ×3');
     document.getElementById('buffLine').textContent=buffs.join('  ·  ');
+    updateStatPanel();
     updateUltimateButton();
     updateJjamppongButton();
+  }
+
+  let lastStatsMarkup='',lastStatusMarkup='';
+  function updateStatPanel(){
+    document.getElementById('statsLevel').textContent=(cheatMode?'MAX · ':'')+'Lv.'+player.level;
+    const rows=[
+      ['체력',Math.ceil(Math.max(0,player.hp))+' / '+player.maxHp],
+      ['경험치',cheatMode?'MAX':Math.floor(player.xp)+' / '+player.xpToNext],
+      ['공격력',(player.damage*(patrolTimer>0?1.3:1)).toFixed(1)],
+      ['이동속도',(player.speed*(lunchBuffTimer>0?1.35:1)).toFixed(0)],
+      ['탄속',player.projSpeed.toFixed(0)],
+      ['치명타',(Math.min(1,player.critChance)*100).toFixed(1)+'%'],
+      ['초당 사격',(1000/(player.fireRate*(lunchBuffTimer>0?.62:1))).toFixed(2)+'회'],
+      ['동시 발사',player.projCount+'발'],
+      ['관통 강화','Lv.'+player.pierceLevel],
+      ['총알당 대상',(player.pierceLevel+1)+'명'],
+      ['수집 범위',player.pickupRadius.toFixed(0)],
+      ['체력 재생',player.regen.toFixed(1)+'/초']
+    ];
+    const markup=rows.map(([k,v])=>'<dt>'+k+'</dt><dd>'+v+'</dd>').join('');
+    if(markup!==lastStatsMarkup){document.getElementById('statValues').innerHTML=markup;lastStatsMarkup=markup}
+    const effects=[];
+    if(cheatMode)effects.push('⚡ HODOO · 최대 강화<br>몬스터 생성 ×10');
+    if(player.pierceLevel)effects.push('➜ 관통 +'+player.pierceLevel+'명 · 영구');
+    if(player.orbitCount)effects.push('🌀 회전 무기 '+player.orbitCount+'개');
+    if(player.machineGunLevel)effects.push('🔫 머신건 Lv.'+player.machineGunLevel);
+    if(player.splashRadius)effects.push('💥 영구 폭발탄');
+    if(player.splashTimer>0)effects.push('💥 폭발탄 '+player.splashTimer.toFixed(1)+'초');
+    if(lunchBuffTimer>0)effects.push('🍱 점심 '+lunchBuffTimer.toFixed(1)+'초 · 이속·연사↑');
+    if(patrolTimer>0)effects.push('🚨 순찰 '+patrolTimer.toFixed(1)+'초 · 공격 +30%');
+    if(homeroomTimer>0)effects.push('📢 종례 '+homeroomTimer.toFixed(1)+'초');
+    if(jjamppongRainTimer>0)effects.push('🍜 짬뽕폭우 '+jjamppongRainTimer.toFixed(1)+'초');
+    if(player.invuln>0)effects.push('🛡 피격 보호 '+player.invuln.toFixed(1)+'초');
+    if(!effects.length)effects.push('기본 장비 · 활성 버프 없음');
+    const status=effects.join('<br>');
+    if(status!==lastStatusMarkup){document.getElementById('statusValues').innerHTML=status;lastStatusMarkup=status}
   }
 
   function drawCampusBackground(){
@@ -1463,14 +1778,23 @@
       ctx.save();
       ctx.translate(s.x,s.y);
       ctx.rotate(drop.rot);
-      ctx.shadowColor='#ff5a36';ctx.shadowBlur=14;
-      ctx.font=Math.round(drop.size)+'px sans-serif';
-      ctx.textAlign='center';ctx.textBaseline='middle';
-      ctx.fillText('🍜',0,0);
-      ctx.shadowBlur=0;
-      ctx.fillStyle='rgba(255,74,45,.8)';
-      ctx.beginPath();ctx.arc(-7,-18,2.5,0,Math.PI*2);ctx.arc(5,-24,2,0,Math.PI*2);ctx.fill();
+      ctx.drawImage(jjamppongSprite,-drop.size,-drop.size,drop.size*2,drop.size*2);
       ctx.restore();
+    }
+
+    // Locked ground warnings and directional dash tell; no camera shake.
+    for(const z of bossZones){
+      const q=worldToScreen(z.x,z.y);
+      ctx.save();ctx.fillStyle=z.timer>0?'rgba(157,57,231,.14)':'rgba(220,130,255,.55)';
+      ctx.strokeStyle='#f0b3ff';ctx.lineWidth=2;ctx.beginPath();ctx.arc(q.x,q.y,z.r,0,Math.PI*2);ctx.fill();ctx.stroke();
+      if(z.timer>0){ctx.lineWidth=4;ctx.beginPath();ctx.arc(q.x,q.y,z.r,-Math.PI/2,-Math.PI/2+(1-z.timer/1.15)*Math.PI*2);ctx.stroke()}
+      ctx.restore();
+    }
+    for(const b of enemies){
+      if(!b.isFinal||b.dashWindup<=0)continue;
+      const q=worldToScreen(b.x,b.y);
+      ctx.save();ctx.strokeStyle='rgba(230,130,255,.65)';ctx.lineWidth=b.r*1.6;
+      ctx.beginPath();ctx.moveTo(q.x,q.y);ctx.lineTo(q.x+b.dashX*300,q.y+b.dashY*300);ctx.stroke();ctx.restore();
     }
 
     // enemies
@@ -1482,6 +1806,7 @@
       else if(e.type==='tank')cfg={body:e.hitFlash>0?'#fff':'#3f5a2c',head:'#557038',leg:'#28381c',eyes:'#ff2b2b',flip:flipZ,walkPhase:e.walkPhase,moving:true,armsForward:true};
       else if(e.type==='boss')cfg={body:e.hitFlash>0?'#fff':'#7d2638',head:'#a54545',leg:'#411923',eyes:'#ffd166',flip:flipZ,walkPhase:e.walkPhase,moving:true,armsForward:true};
       else cfg={body:e.hitFlash>0?'#fff':'#5c7a3f',head:'#7c9a5c',leg:'#3c5228',eyes:'#ff2b2b',flip:flipZ,walkPhase:e.walkPhase,moving:true,armsForward:true};
+      if(e.isFinal){cfg.body=e.hitFlash>0?'#fff':'#51247c';cfg.head='#b587d4';cfg.eyes='#7dffe5'}
       drawCharacter(ctx,s.x,s.y,e.r*(e.type==='boss'?1.85:1.7),cfg);
 
       // 몬스터 이름표
@@ -1517,7 +1842,7 @@
       const tx=s.x-(p.vx/len)*16,ty=s.y-(p.vy/len)*16;
       ctx.strokeStyle='rgba(255,210,63,.55)';ctx.lineWidth=2;
       ctx.beginPath();ctx.moveTo(tx,ty);ctx.lineTo(s.x,s.y);ctx.stroke();
-      ctx.beginPath();ctx.fillStyle=p.kind==='mg'?'#8be9fd':(p.splashRadius>0?'#ff9f43':'#ffd23f');ctx.shadowColor=ctx.fillStyle;ctx.shadowBlur=p.kind==='mg'?6:8;
+      ctx.beginPath();ctx.fillStyle=p.pierceRemaining>0?'#71f7ee':p.kind==='mg'?'#8be9fd':(p.splashRadius>0?'#ff9f43':'#ffd23f');ctx.shadowColor=ctx.fillStyle;ctx.shadowBlur=p.kind==='mg'?6:8;
       ctx.arc(s.x,s.y,p.r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;
     }
 
@@ -1558,6 +1883,8 @@
     const dt=Math.min(.05,(now-lastFrame)/1000);
     lastFrame=now;
     if(state==='playing')update(dt);
+    document.getElementById('pauseBtn').classList.toggle('hidden',!['playing','paused'].includes(state));
+    document.getElementById('statsPanel').classList.toggle('hidden',['start','gameover','victory'].includes(state));
     render();
     requestAnimationFrame(loop);
   }
@@ -1579,6 +1906,48 @@
     if(musicOn) bgm.play().catch(()=>{});
   });
 
+
+  function clearMovement(){
+    for(const k of Object.keys(keys))delete keys[k];
+    joyVec={x:0,y:0};joyActive=false;joyTouchId=null;hideJoy();
+  }
+  function pauseGame(){
+    clearMovement();
+    if(state!=='playing')return;
+    state='paused';bgm.pause();
+    document.getElementById('pauseScreen').classList.remove('hidden');
+    updateUltimateButton();updateJjamppongButton();
+  }
+  function resumeGame(){
+    if(state!=='paused')return;
+    clearMovement();state='playing';lastFrame=performance.now();
+    document.getElementById('pauseScreen').classList.add('hidden');
+    if(musicOn)bgm.play().catch(()=>{});
+    updateUltimateButton();updateJjamppongButton();
+  }
+  document.getElementById('pauseBtn').addEventListener('click',()=>state==='paused'?resumeGame():pauseGame());
+  document.getElementById('resumeBtn').addEventListener('click',resumeGame);
+  window.addEventListener('keydown',e=>{
+    if(e.target instanceof HTMLInputElement || e.repeat)return;
+    if(e.key==='Escape'||e.key.toLowerCase()==='p'){
+      e.preventDefault();state==='paused'?resumeGame():pauseGame();
+    }
+  });
+  window.addEventListener('blur',pauseGame);
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)pauseGame()});
+  document.getElementById('menuBtn').addEventListener('click',()=>{
+    clearMovement();state='start';
+    document.getElementById('gameOverScreen').classList.add('hidden');
+    document.getElementById('startScreen').classList.remove('hidden');
+    renderRankings();updateUltimateButton();updateJjamppongButton();
+  });
+
+  document.getElementById('cheatCode').addEventListener('input',()=>{
+    const code=document.getElementById('cheatCode').value.trim().toLowerCase();
+    document.getElementById('cheatStatus').textContent=code==='hodoo'
+      ?'⚡ HODOO 해제! Lv.100 · 모든 강화 MAX · 몬스터 ×10 (최종보스 1마리)'
+      :code?'일치하는 치트키가 없습니다. 일반 모드로 시작합니다.':'비워두면 일반 모드로 시작합니다.';
+  });
   renderRankings();
   updateHUD();
   updateUltimateButton();
