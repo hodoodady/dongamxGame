@@ -253,7 +253,7 @@
   <div id="startScreen">
     <div class="edition">CAMPUS SURVIVORS / FINAL EDITION</div>
     <h1>동아MX : 청암대학교 서바이버즈</h1>
-    <p class="sub">출결 몬스터가 몰려오는 청암대학교.<br>10분을 버티고 최종보스 ‘중도포기’를 쓰러뜨려 수료하세요.<br>최종보스: 체력 22만 · 피해 60% 감소 · 체력 재생 없음.<br>돌진 후 1.4초간 공격 중단·방어 약화! 이때 집중 공격하세요.<br>탄막·축소 전장 유지 · 선아쌤 필살기 8% 피해.</p>
+    <p class="sub">출결 몬스터가 몰려오는 청암대학교.<br>10분을 버티고 최종보스 ‘중도포기’를 쓰러뜨려 수료하세요.<br>최종보스: 체력 45만 · 피해 60% 감소 · 체력 재생 없음.<br>속도차 3연사 탄막 + 이동 예측 조준탄 · 이동 예측 바닥 공격 · 2단계부터 연속 돌진!<br>마지막 돌진 후 1.4초간 공격 중단·방어 약화! 이때 집중 공격하세요.<br>탄막·축소 전장 유지 · 선아쌤 필살기 8% 피해.</p>
     <div class="featureChips"><span>🍜 짬뽕 폭우 · E</span><span>🔥 선아쌤 필살기 · Q</span><span>🍱 점심 버프</span><span>🚨 긴급순찰</span><span>📢 종례 타임</span><span>👹 60초마다 보스</span><span>☠️ 중도포기 · 3단계 극악 보스</span><span>➜ 영구 관통탄 강화</span><span>📈 레벨마다 기본 스탯 성장</span></div>
     <p class="storageNote">WASD / 방향키 이동 · 자동 공격 · P / Esc 일시정지<br>모바일: 왼쪽 아래를 드래그해 이동 · 오른쪽 필살기 버튼 터치</p>
     <label class="nameField">랭킹 닉네임 <input id="playerName" maxlength="12" placeholder="동아MX" autocomplete="off" aria-label="랭킹 닉네임"></label>
@@ -662,11 +662,11 @@
   function spawnFinalBoss(){
     if(finalBossSpawned)return;
     finalBossSpawned=true;
-    const hp=220000;
+    const hp=450000;
     const distance=Math.max(180,Math.min(W,H)*.38);
     enemies.push({x:player.x+distance,y:player.y,r:48,hp,maxHp:hp,speed:100,
       dmg:300,xp:150,type:'boss',isFinal:true,name:'중도포기',hitFlash:0,
-      walkPhase:0,dashCooldown:3,dashTimer:0,dashWindup:0,dashX:0,dashY:0,phase:1,zoneCooldown:1.8,summonCooldown:5,fightTime:0,recoveryTimer:0,bulletCooldown:2.5,arenaX:player.x,arenaY:player.y,arenaRadius:560});
+      walkPhase:0,dashCooldown:3,dashTimer:0,dashWindup:0,dashX:0,dashY:0,phase:1,zoneCooldown:1.8,summonCooldown:5,fightTime:0,recoveryTimer:0,bulletCooldown:2.5,burstDelay:0,burstAim:0,burstWave:0,dashCombo:0,arenaX:player.x,arenaY:player.y,arenaRadius:560});
     bossAlertTimer=4;
     document.getElementById('bossAlert').textContent='☠️ 최종보스 중도포기 출현!';
     document.getElementById('bossAlert').classList.add('show');
@@ -677,6 +677,27 @@
 
   function damageAfterArmor(enemy,damage){
     return enemy.isFinal?Math.min(damage*(enemy.recoveryTimer>0?.75:.4),enemy.maxHp*.01):damage;
+  }
+
+  function fireBossRing(b,wave=0){
+    const count=24+b.phase*4;
+    const offset=b.burstAim+wave*Math.PI/count*(wave===2?-1:1);
+    const gapWidth=b.phase===3?0:1;
+    const speed=(165+b.phase*35)*[.85,1,1.2][wave];
+    for(let i=0;i<count&&bossBullets.length<320;i++){
+      if(Math.abs(i-Math.floor(count/4))<=gapWidth||Math.abs(i-Math.floor(count*3/4))<=gapWidth)continue;
+      const angle=offset+i*Math.PI*2/count;
+      bossBullets.push({x:b.x,y:b.y,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,life:3.2,r:6});
+    }
+    if(wave>0){
+      const move=getMoveVector(),lead=player.speed*(lunchBuffTimer>0?1.35:1)*.25;
+      const aim=Math.atan2(player.y+move.y*lead-b.y,player.x+move.x*lead-b.x);
+      const fan=1+b.phase*2,fanSpeed=260+b.phase*35;
+      for(let i=0;i<fan&&bossBullets.length<320;i++){
+        const angle=aim+(i-(fan-1)/2)*.16;
+        bossBullets.push({x:b.x,y:b.y,vx:Math.cos(angle)*fanSpeed,vy:Math.sin(angle)*fanSpeed,life:2.8,r:5,aimed:true});
+      }
+    }
   }
 
   function updateFinalBoss(b,dt){
@@ -690,27 +711,34 @@
     b.dmg=Math.ceil(player.maxHp*[0,.18,.22,.28][phase]);
     b.arenaRadius=Math.max(400,560-b.fightTime);
     if(b.recoveryTimer>0){b.recoveryTimer=Math.max(0,b.recoveryTimer-dt);return;}
+    if(b.burstDelay>0){
+      b.burstDelay=Math.max(0,b.burstDelay-dt);
+      if(b.burstDelay===0){
+        b.burstWave++;fireBossRing(b,b.burstWave);
+        if(b.burstWave<2)b.burstDelay=.38;
+      }
+    }
     b.bulletCooldown-=dt;
     if(b.bulletCooldown<=0){
-      b.bulletCooldown=[0,3,2.45,2][phase];
-      const count=16+phase*4;
-      const aim=Math.atan2(player.y-b.y,player.x-b.x);
-      for(let i=0;i<count&&bossBullets.length<240;i++){
-        // Two wide gaps let the player cross each ring.
-        if(Math.abs(i-Math.floor(count/4))<=1||Math.abs(i-Math.floor(count*3/4))<=1)continue;
-        const angle=aim+i*Math.PI*2/count+b.fightTime*.16;
-        bossBullets.push({x:b.x,y:b.y,vx:Math.cos(angle)*(150+phase*35),vy:Math.sin(angle)*(150+phase*35),life:3.2,r:6});
-      }
+      b.bulletCooldown=[0,2.25,1.84,1.5][phase];
+      b.burstAim=Math.atan2(player.y-b.y,player.x-b.x)+b.fightTime*.16;
+      b.burstWave=0;fireBossRing(b,0);b.burstDelay=.32;
     }
     b.zoneCooldown-=dt;b.summonCooldown-=dt;
     if(b.zoneCooldown<=0){
-      b.zoneCooldown=[0,3.6,2.85,2.4][phase];
-      for(let i=0;i<phase;i++){
-        const angle=Math.PI*2*i/phase;
-        bossZones.push({x:player.x+(i?Math.cos(angle)*140:0),y:player.y+(i?Math.sin(angle)*140:0),
-          r:phase===3?105:85,timer:1.1,active:0,damage:Math.ceil(player.maxHp*[0,.12,.16,.2][phase])});
+      b.zoneCooldown=[0,2.7,2.14,1.8][phase];
+      const move=getMoveVector();
+      const lead=player.speed*(lunchBuffTimer>0?1.35:1)*.35;
+      for(let i=0;i<phase+1;i++){
+        const angle=Math.PI*2*i/(phase+1);
+        const x=player.x+(i===0?0:i===1?move.x*lead:Math.cos(angle)*150);
+        const y=player.y+(i===0?0:i===1?move.y*lead:Math.sin(angle)*150);
+        const warning=1.1+i*.18;
+        bossZones.push({x,y,r:phase===3?105:85,timer:warning,maxTimer:warning,active:0,
+          damage:Math.ceil(player.maxHp*[0,.12,.16,.2][phase])});
       }
     }
+
     if(b.summonCooldown<=0){
       b.summonCooldown=phase===3?10:12;
       const liveAdds=enemies.filter(e=>!e.isFinal&&!e._dead).length;
@@ -732,7 +760,13 @@
       b.x+=b.dashX*(440+phase*70)*dt;b.y+=b.dashY*(440+phase*70)*dt;
       b.dashTimer=Math.max(0,b.dashTimer-dt);
       if(b.dashTimer===0){
-        b.recoveryTimer=1.4;bossBullets=[];bossZones=[];
+        if(b.dashCombo>0){
+          b.dashCombo--;
+          const dx=player.x-b.x,dy=player.y-b.y,d=Math.hypot(dx,dy)||1;
+          b.dashX=dx/d;b.dashY=dy/d;b.dashWindup=.65;
+          addFloatText(b.x,b.y-65,'연속 돌진 예고!','#ffb3dc');return;
+        }
+        b.recoveryTimer=1.4;b.burstDelay=0;b.burstWave=0;bossBullets=[];bossZones=[];
         addFloatText(b.x,b.y-65,'빈틈! 지금 공격!','#a3ffcc');
       }
       return;
@@ -740,8 +774,8 @@
     b.dashCooldown-=dt;
     const dx=player.x-b.x,dy=player.y-b.y,d=Math.hypot(dx,dy)||1;
     if(b.dashCooldown<=0){
-      b.dashX=dx/d;b.dashY=dy/d;b.dashWindup=.85;
-      b.dashCooldown=[0,3.6,2.95,2.4][phase];return;
+      b.dashX=dx/d;b.dashY=dy/d;b.dashWindup=.85;b.dashCombo=phase>=2?1:0;
+      b.dashCooldown=[0,2.7,2.21,1.8][phase];return;
     }
     b.x+=dx/d*(110+phase*30)*dt;b.y+=dy/d*(110+phase*30)*dt;
   }
@@ -1851,16 +1885,23 @@
       ctx.fillStyle='#ffd1da';ctx.font='bold 12px sans-serif';ctx.textAlign='center';
       ctx.fillText('경계 밖: 최대 HP 8% 피해',q.x,q.y-arenaBoss.arenaRadius+20);ctx.restore();
     }
-    ctx.save();ctx.fillStyle='#ed9fff';ctx.beginPath();
-    for(const shot of bossBullets){const q=worldToScreen(shot.x,shot.y);ctx.moveTo(q.x+shot.r,q.y);ctx.arc(q.x,q.y,shot.r,0,Math.PI*2)}
-    ctx.fill();ctx.restore();
+    ctx.save();
+    for(const aimed of [false,true]){
+      ctx.fillStyle=aimed?'#ffcb70':'#ed9fff';ctx.beginPath();
+      for(const shot of bossBullets){
+        if(!!shot.aimed!==aimed)continue;
+        const q=worldToScreen(shot.x,shot.y);ctx.moveTo(q.x+shot.r,q.y);ctx.arc(q.x,q.y,shot.r,0,Math.PI*2);
+      }
+      ctx.fill();
+    }
+    ctx.restore();
 
     // Locked ground warnings and directional dash tell; no camera shake.
     for(const z of bossZones){
       const q=worldToScreen(z.x,z.y);
       ctx.save();ctx.fillStyle=z.timer>0?'rgba(157,57,231,.14)':'rgba(220,130,255,.55)';
       ctx.strokeStyle='#f0b3ff';ctx.lineWidth=2;ctx.beginPath();ctx.arc(q.x,q.y,z.r,0,Math.PI*2);ctx.fill();ctx.stroke();
-      if(z.timer>0){ctx.lineWidth=4;ctx.beginPath();ctx.arc(q.x,q.y,z.r,-Math.PI/2,-Math.PI/2+(1-z.timer/1.1)*Math.PI*2);ctx.stroke()}
+      if(z.timer>0){ctx.lineWidth=4;ctx.beginPath();ctx.arc(q.x,q.y,z.r,-Math.PI/2,-Math.PI/2+(1-z.timer/(z.maxTimer||1.1))*Math.PI*2);ctx.stroke()}
       ctx.restore();
     }
     for(const b of enemies){
